@@ -1,22 +1,31 @@
 #' @export
-`%not_in%` <- negate(`%in%`)
+`%not_in%` <- purrr::negate(`%in%`)
 
 #' @export
-not_null <- negate(is.null)
+not_null <- purrr::negate(is.null)
 
 #' @export
-not_na <- negate(is.na)
+not_na <- purrr::negate(is.na)
+
+#' @export
+as_assertion <- function(.predicate) {
+
+  function(...) {
+    checkmate::assert_true(.predicate(...))
+  }
+
+}
 
 #' @export
 assert_not_na <- as_assertion(not_na)
 
 #' @export
-n_unique <- compose(length, unique)
+n_unique <- purrr::compose(length, unique)
 
 #' @export
 add_class <- function(.object, .class) {
 
-  assert_character(.class)
+  checkmate::assert_character(.class)
 
   class_x <- class(.object)
 
@@ -38,33 +47,42 @@ div_zero <- function(.x, .y) {
 #' @export
 is_weekend <- function(.dttm) {
 
-  assert_posixct(.dttm)
+  checkmate::assert_posixct(.dttm)
 
-  wday(.dttm, label = TRUE) %in% c("Sat", "Sun")
+  lubridate::wday(.dttm, label = TRUE) %in% c("Sat", "Sun")
 
 }
 
 #' @export
-not_weekend <- negate(is_weekend)
+not_weekend <- purrr::negate(is_weekend)
 
 #' @export
 floor_month <- function(.dttm) {
 
-  assert_posixct(.dttm, len = 1,
-                 any.missing = FALSE)
+  checkmate::assert_posixct(
+    .dttm,
+    len = 1,
+    any.missing = FALSE
+  )
 
-  floor_date(.dttm, unit = "P1M")
+  lubridate::floor_date(.dttm, unit = "P1M")
 
 }
 
 #' @export
 floor_week <- function(.dttm) {
 
-  assert_posixct(.dttm, len = 1,
-                 any.missing = FALSE)
+  checkmate::assert_posixct(
+    .dttm,
+    len = 1,
+    any.missing = FALSE
+  )
 
-  floor_date(.dttm, unit = "P1W",
-             week_start = 1)
+  lubridate::floor_date(
+    .dttm,
+    unit = "P1W",
+    week_start = 1
+  )
 
 }
 

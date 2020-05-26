@@ -12,5 +12,9 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Encoding: UTF-8
 LazyData: true
+Imports:
+  purrr (>= 0.3.4),
+  checkmate (>= 2.0.0),
+  lubridate (>= 1.7.4)
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
