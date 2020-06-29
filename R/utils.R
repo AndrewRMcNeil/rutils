@@ -202,3 +202,15 @@ assert_utc <- function(.dttm) {
 
 #' @export
 object_name <- purrr::compose(deparse, substitute)
+
+#' @export
+start_timer <- function(.fct_name) {
+
+  if (exists(".timer") && isTRUE(.timer)) {
+    tictoc::tic(msg = .fct_name)
+  }
+
+}
+
+#' @export
+stop_timer <- function() tictoc::toc()
